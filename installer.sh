@@ -6,7 +6,7 @@
 set -e
 
 PANEL_PATH="${PTERODACTYL_PATH:-/var/www/pterodactyl}"
-THEME_URL="https://github.com/YourUsername/arix-v1.3.1/archive/refs/heads/main.tar.gz"
+THEME_URL="https://github.com/CodeByCruel/arix-v1.3.1/archive/refs/heads/master.tar.gz"
 THEME_NAME="arix"
 
 RED='\033[0;31m'
