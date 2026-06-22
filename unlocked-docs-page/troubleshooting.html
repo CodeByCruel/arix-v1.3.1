@@ -1,0 +1,136 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Troubleshooting</title>
+<script src="https://cdn.tailwindcss.com"></script>
+</head>
+<body class="bg-gray-900 text-gray-200 min-h-screen">
+
+<div class="max-w-4xl mx-auto py-10 px-6">
+
+    <div class="flex items-center gap-8 mb-6">
+        <a href="/docs" class="relative flex items-center capitalize text-gray-400">
+            <svg class="absolute -left-6 opacity-50" height="16" width="16" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24">
+                <path d="M9 6l6 6-6 6"></path>
+            </svg>
+            docs
+        </a>
+        <a href="/docs/getting-started" class="relative flex items-center capitalize text-gray-400">
+            <svg class="absolute -left-6 opacity-50" height="16" width="16" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24">
+                <path d="M9 6l6 6-6 6"></path>
+            </svg>
+            getting started
+        </a>
+        <a href="/docs/getting-started/troubleshooting" class="relative flex items-center capitalize text-gray-200">
+            <svg class="absolute -left-6 opacity-50" height="16" width="16" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24">
+                <path d="M9 6l6 6-6 6"></path>
+            </svg>
+            troubleshooting
+        </a>
+    </div>
+
+    <div class="prose prose-invert max-w-none">
+        <h1>Troubleshooting</h1>
+        <p>It often happens that you experience a problem while installing or using Arix Theme. Therefore, in this article we have explained for occurring error's of Arix with solutions belonging to them.</p>
+
+        <blockquote>
+            <p>Tip, we've built a bot that can recognise pre-programmed errors and give you the right solution, which you can find on our <a href="/community">Discord server</a>.</p>
+        </blockquote>
+
+        <p>First, you need to understand what kind of error you're experiencing. We divide them into 2 categories, front-end bugs and back-end bugs. You can recognise a front-end error when you either use the <code>yarn build:production</code> command, or you refresh your Pterodactyl panel and it either is a white screen or loads but tells you to reload/refresh the application. In all other cases it is probably caused by a backend error.</p>
+    </div>
+
+    <span class="text-[0.1rem] text-transparent select-none">B954748</span>
+
+    <div class="prose prose-invert max-w-none mt-10">
+
+        <h2>How to troubleshoot when using the installer?</h2>
+        <p>We're now going to discuss the errors you may encounter when installing Arix Theme. It is important to <strong>read your error messages</strong> and not panic or do things without reading them!</p>
+
+        <ul>
+            <li>500 error after installing</li>
+            <li>White screen after installing</li>
+            <li>No theme after installing</li>
+        </ul>
+
+        <h2>500 error after installing</h2>
+        <p>If you're experiencing a 500 error in most cases you can fix the error by running the commands below:</p>
+
+        <pre class="bg-gray-800 p-4 rounded"><code>chmod -R 755 storage/* bootstrap/cache
+php artisan migrate --force
+php artisan optimize:clear
+php artisan optimize 
+
+chown -R www-data:www-data /var/www/pterodactyl/*
+chown -R nginx:nginx /var/www/pterodactyl/*
+chown -R apache:apache /var/www/pterodactyl/*
+</code></pre>
+
+        <hr>
+
+        <h2>White screen after installing</h2>
+        <p>Are you experiencing a white screen after installing Arix Theme? This is probably caused by one of the following errors.</p>
+
+        <pre class="bg-gray-800 p-4 rounded"><code>Node.js version is v20 (>= 17)
+Browserslist: caniuse-lite is outdated. Please run:
+npx update-browserslist-db@latest
+node:internal/crypto/hash:68
+this[kHandle] = new _Hash(algorithm, xofLen);
+</code></pre>
+
+        <p>Did the installer give this error? This is because you're running Pterodactyl on node v17+. Fix with the commands below:</p>
+
+        <pre class="bg-gray-800 p-4 rounded"><code>export NODE_OPTIONS=--openssl-legacy-provider
+php artisan arix install
+</code></pre>
+
+        <hr>
+
+        <pre class="bg-gray-800 p-4 rounded"><code>Node.js version is v20 (>= 17)
+error Command failed with exit code 2.
+</code></pre>
+
+        <p>If you get a white screen after the installer says <code>Command failed with exit code 2</code>:</p>
+
+        <pre class="bg-gray-800 p-4 rounded"><code>php artisan down
+rm -rf /var/www/pterodactyl/resources
+php artisan arix uninstall
+php artisan arix install
+php artisan up
+</code></pre>
+
+        <hr>
+
+        <h2>No theme after installing</h2>
+
+        <p>After installing Arix Theme, is the default Pterodactyl theme still visible?</p>
+
+        <p>If installer said:</p>
+
+        <pre class="bg-gray-800 p-4 rounded"><code>no such file or directory: add
+</code></pre>
+
+        <p>Then you installed incorrectly. Follow:</p>
+        <a href="https://pterodactyl.io/community/customization/panel.html">
+            https://pterodactyl.io/community/customization/panel.html
+        </a>
+
+        <hr>
+
+        <pre class="bg-gray-800 p-4 rounded"><code>Node.js version is v16 (< 17)
+RpcIpcMessagePortClosedError: Process exited [SIGKILL]
+error Command failed with exit code 1
+</code></pre>
+
+        <p>This means your server does not have enough RAM. <strong>Minimum recommended: 3 GB.</strong></p>
+
+    </div>
+
+    <span class="text-[0.1rem] text-transparent select-none">B954748</span>
+
+</div>
+
+</body>
+</html>

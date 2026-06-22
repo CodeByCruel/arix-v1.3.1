@@ -1,0 +1,119 @@
+<!DOCTYPE html>
+<html lang="en" class="h-full">
+<head>
+<meta charset="UTF-8">
+<title>Arix - Multi Language</title>
+<script src="https://cdn.tailwindcss.com"></script>
+</head>
+<body class="min-h-full bg-gray-950 text-gray-200">
+
+<div class="w-full min-h-screen p-6 md:p-12">
+    <div class="max-w-4xl mx-auto">
+
+        <div class="flex items-center gap-6 mb-8">
+            <a href="/docs" class="relative flex items-center capitalize text-gray-400 pl-6">
+                <svg class="absolute left-0 opacity-50 w-4 h-4" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><path d="M9 6l6 6l-6 6"/></svg>
+                docs
+            </a>
+            <a href="/docs/customisation" class="relative flex items-center capitalize text-gray-400 pl-6">
+                <svg class="absolute left-0 opacity-50 w-4 h-4" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><path d="M9 6l6 6l-6 6"/></svg>
+                customisation
+            </a>
+            <a href="/docs/customisation/multi-language" class="relative flex items-center capitalize text-gray-300 pl-6">
+                <svg class="absolute left-0 opacity-50 w-4 h-4" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><path d="M9 6l6 6l-6 6"/></svg>
+                multi language
+            </a>
+        </div>
+
+        <div class="prose prose-invert prose-pre:bg-gray-900 prose-pre:border prose-pre:border-gray-700 max-w-none">
+            <h1 class="text-white">Multi-language system</h1>
+            <p>One of the biggest selling points of Arix Theme is the multi-language system of Arix Theme. The system makes it possible that people can pick their own language in the account settings.</p>
+
+            <h2>How to add the <a href="https://builtbybit.com/r/38881/">language pack</a>?</h2>
+            <p>The first and most simple way of adding translations to your panel is by using our translation pack. After download the translation pack, drag and drop the <code>resources</code> folder into your Pterodactyl folder. Then run:</p>
+
+            <pre><code>cd /var/www/pterodactyl
+export NODE_OPTIONS=--openssl-legacy-provider
+yarn build:production</code></pre>
+        </div>
+
+        <span class="text-[0.1rem] text-transparent select-none">B954748</span>
+
+        <div class="prose prose-invert prose-pre:bg-gray-900 prose-pre:border prose-pre:border-gray-700 max-w-none mt-10">
+            <h2>How to add my own translation?</h2>
+            <p>Adding your own translation is straightforward.</p>
+
+            <p>Navigate to <code>/resources/lang/</code>. Copy the folder <code>en</code> and rename it to the language code. Example: rename it to <code>nl</code> for Dutch.</p>
+
+            <p>Translate all files inside <code>arix</code>. Example: <code>/resources/lang/nl/arix/</code></p>
+
+            <p>Then edit the file <code>/resources/scripts/components/dashboard/forms/AppearanceWrapper.tsx</code></p>
+
+            <pre><code>const languages = [
+    { key: 'en', value: 'English' },
+];</code></pre>
+
+            <p>Change to:</p>
+
+            <pre><code>const languages = [
+    { key: 'en', value: 'English' },
+    { key: 'nl', value: 'Dutch' },
+];</code></pre>
+
+            <p>Then run:</p>
+
+            <pre><code>cd /var/www/pterodactyl
+export NODE_OPTIONS=--openssl-legacy-provider
+yarn build:production</code></pre>
+
+            <hr class="border-gray-700">
+
+            <h2>How to add translations to addons?</h2>
+            <p>Much of Pterodactyl is now available in multiple languages because of Arix Theme. Addons still require translation manually.</p>
+
+            <blockquote class="border-l-4 border-gray-600 pl-4">Adding translations to addons requires programming experience.</blockquote>
+
+            <p>Navigate to <code>/resources/lang/en/arix/server</code> and create a file like <code>plugins.php</code>.</p>
+
+            <pre><code>&lt;?php
+return [
+    'example' => 'This is an example value',
+    'example-group' => [
+        'group-child' => 'This is an example group.',
+    ],
+];</code></pre>
+
+            <p>Use translations inside React files:</p>
+
+            <pre><code>import React from 'react'
+import { useTranslation } from 'react-i18next'
+
+const ExampleContainer = () => {
+    const { t } = useTranslation('arix/server/plugin')
+
+    return (
+        &lt;div&gt;
+            {t('example')}
+            {t('example-group.group-child')}
+        &lt;/div&gt;
+    )
+}
+
+export default ExampleContainer</code></pre>
+
+            <p>Finally run:</p>
+
+            <pre><code>cd /var/www/pterodactyl
+export NODE_OPTIONS=--openssl-legacy-provider
+yarn build:production</code></pre>
+
+            <p>We do not provide support for addon translation.</p>
+        </div>
+
+        <span class="text-[0.1rem] text-transparent select-none">B954748</span>
+
+    </div>
+</div>
+
+</body>
+</html>
