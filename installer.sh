@@ -34,7 +34,7 @@ echo -e "${YELLOW}[*] Downloading Arix...${NC}"
 cd /tmp
 curl -sL "$THEME_URL" -o arix.tar.gz
 tar -xzf arix.tar.gz
-cd arix-v1.3.1-main
+cd arix-v1.3.1-master
 
 echo -e "${YELLOW}[*] Installing theme...${NC}"
 cp -r pterodactyl/app/Console/Commands/* "$PANEL_PATH/app/Console/Commands/"
