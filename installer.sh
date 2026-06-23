@@ -73,64 +73,23 @@ fi
 
 echo -e "${GREEN}[OK] Downloaded${NC}"
 
-# Install theme files
-echo -e "${YELLOW}[*] Installing theme files...${NC}"
+# Copy theme to panel (arix directory)
+echo -e "${YELLOW}[*] Copying theme files...${NC}"
+cp -rf "$THEME_DIR/pterodactyl/arix" "$PANEL_PATH/"
 
-# Commands
+# Copy artisan command
 cp -f "$THEME_DIR/pterodactyl/app/Console/Commands/"*.php "$PANEL_PATH/app/Console/Commands/"
 
-# Theme core - app files
-cp -rf "$THEME_DIR/pterodactyl/arix/v1.3.1/app/Http/" "$PANEL_PATH/app/Http/"
-cp -f "$THEME_DIR/pterodactyl/arix/v1.3.1/app/Models/"*.php "$PANEL_PATH/app/Models/" 2>/dev/null || true
-cp -f "$THEME_DIR/pterodactyl/arix/v1.3.1/app/Transformers/"*.php "$PANEL_PATH/app/Transformers/" 2>/dev/null || true
-cp -rf "$THEME_DIR/pterodactyl/arix/v1.3.1/app/ViewComposers/" "$PANEL_PATH/app/ViewComposers/" 2>/dev/null || true
-
-# Config
-cp -f "$THEME_DIR/pterodactyl/arix/v1.3.1/config/arix.php" "$PANEL_PATH/config/"
-
-# Database migrations
-cp -f "$THEME_DIR/pterodactyl/arix/v1.3.1/database/migrations/"*.php "$PANEL_PATH/database/migrations/" 2>/dev/null || true
-
-# Resources (views, lang, scripts)
-cp -rf "$THEME_DIR/pterodactyl/arix/v1.3.1/resources/views/" "$PANEL_PATH/resources/views/"
-cp -rf "$THEME_DIR/pterodactyl/arix/v1.3.1/resources/lang/" "$PANEL_PATH/resources/lang/"
-cp -rf "$THEME_DIR/pterodactyl/arix/v1.3.1/resources/scripts/" "$PANEL_PATH/resources/scripts/"
-
-# Routes
-cp -f "$THEME_DIR/pterodactyl/arix/v1.3.1/routes/admin.php" "$PANEL_PATH/routes/"
-cp -f "$THEME_DIR/pterodactyl/arix/v1.3.1/routes/auth.php" "$PANEL_PATH/routes/"
-
-# Public assets
-mkdir -p "$PANEL_PATH/public/arix"
-cp -rf "$THEME_DIR/pterodactyl/arix/v1.3.1/public/arix/"* "$PANEL_PATH/public/arix/"
-cp -rf "$THEME_DIR/pterodactyl/arix/v1.3.1/public/themes/"* "$PANEL_PATH/public/themes/"
-
-echo -e "${GREEN}[OK] Files installed${NC}"
-
-# Run migrations
-echo -e "${YELLOW}[*] Running migrations...${NC}"
-cd "$PANEL_PATH"
-php artisan migrate --force 2>/dev/null || true
-
-# Clear and rebuild cache
-echo -e "${YELLOW}[*] Optimizing panel...${NC}"
-php artisan optimize:clear
-php artisan optimize
-
-# Set permissions
-echo -e "${YELLOW}[*] Setting permissions...${NC}"
-chown -R www-data:www-data "$PANEL_PATH/storage" "$PANEL_PATH/bootstrap/cache" 2>/dev/null || true
-chmod -R 755 "$PANEL_PATH/storage" "$PANEL_PATH/bootstrap/cache" 2>/dev/null || true
+echo -e "${GREEN}[OK] Files copied${NC}"
 
 # Cleanup
 rm -rf /tmp/arix-v1.3.1-master /tmp/arix.tar.gz
 
 echo ""
 echo -e "${GREEN}━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━${NC}"
-echo -e "${GREEN}     Arix Theme Installed!${NC}"
+echo -e "${GREEN}     Files Ready!${NC}"
 echo -e "${GREEN}━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━${NC}"
 echo ""
-echo -e "${CYAN}Configure theme:${NC}"
-echo -e "  1. Go to Admin Panel → Arix Theme"
-echo -e "  2. Or edit: ${PANEL_PATH}/config/arix.php"
-echo -e "  3. Then run: ${CYAN}php artisan config:clear${NC}"
+echo -e "${CYAN}Now run:${NC}"
+echo -e "  cd $PANEL_PATH"
+echo -e "  php artisan arix install"
